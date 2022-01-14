@@ -1,4 +1,11 @@
 const loginSvc = {
+
+    /**
+     * mock authentication
+     * @param {*} username
+     * @param {*} password
+     * @returns
+     */
     auth(username, password) {
         return new Promise((resolve, reject) => {
             if ((username == 'admin') && (password == 'admin')) {
@@ -20,6 +27,10 @@ const loginSvc = {
         })
     },
 
+    /**
+     * mock logout
+     * @returns Promise
+     */
     logout() {
         return new Promise((resolve) => {
             resolve({
