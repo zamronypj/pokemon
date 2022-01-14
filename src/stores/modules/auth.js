@@ -9,7 +9,7 @@ export default {
     state : {
         loading : false,
         authToken : localStorage.getItem('authToken'),
-        username : ''
+        username : localStorage.getItem('username'),
     },
 
     getters : {
@@ -46,6 +46,34 @@ export default {
             aState.loading = false
             aState.authToken = undefined
             aState.username = ''
+        },
+
+        /**
+         * called when logout begin
+         * @param {*} aState vuex state
+         */
+         beginLogout(aState) {
+            aState.loading = true
+        },
+
+        /**
+         * called when logout is successful
+         * @param {*} aState vuex state
+         */
+        logoutSuccess(aState) {
+            aState.loading = false
+            aState.authToken = undefined
+            aState.username = ''
+        },
+
+        /**
+         * called when auth failed
+         * @param {*} aState vuex state
+         */
+        logoutFailed(aState) {
+            aState.loading = false
+            aState.authToken = undefined
+            aState.username = ''
         }
     },
 
@@ -61,11 +89,35 @@ export default {
                 commit('beginAuth')
                 loginSvc.auth(authData.username, authData.password).then((resp) => {
                     localStorage.setItem('authToken', resp.data.token)
+                    localStorage.setItem('username', resp.data.username)
                     commit('authSuccess', resp)
                     resolve(resp);
                 }).catch((err) => {
                     localStorage.removeItem('authToken')
+                    localStorage.removeItem('username')
                     commit('authFailed')
+                    reject(err)
+                })
+            })
+        },
+
+        /**
+         * action to logout user
+         * @param Vuex.Store param0
+         * @param {*} userData
+         */
+         logout({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('beginLogout')
+                loginSvc.logout().then((resp) => {
+                    localStorage.removeItem('authToken')
+                    localStorage.removeItem('username')
+                    commit('logoutSuccess', resp)
+                    resolve(resp);
+                }).catch((err) => {
+                    localStorage.removeItem('authToken')
+                    localStorage.removeItem('username')
+                    commit('logoutFailed')
                     reject(err)
                 })
             })

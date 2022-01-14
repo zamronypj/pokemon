@@ -7,15 +7,19 @@
             </div>
             <div class="flex items-center justify-between">
                 <div>HP</div>
-                <div>{{ pokemon? pokemon.hp : '-'}}</div>
+                <div class="text-blue-900">{{ pokemon? pokemon.hp : '-'}}</div>
             </div>
             <div class="flex items-center justify-between">
                 <div>Rarity</div>
-                <div>{{ pokemon ? pokemon.rarity : '-' }}</div>
+                <div class="text-blue-900">{{ pokemon ? pokemon.rarity : '-' }}</div>
             </div>
             <div class="flex items-center justify-between">
                 <div>Type</div>
-                <div>{{ pokemon && pokemon.types ? pokemon.types.join(', ') : '-'}}</div>
+                <div class="text-blue-900">{{ pokemon && pokemon.types ? pokemon.types.join(', ') : '-'}}</div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div>Set</div>
+                <div class="text-blue-900">{{ pokemon && pokemon.set ? pokemon.set.name : '-'}}</div>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import Card from '../Card/Card.vue'
 import Search from '../Search/Search.vue'
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
+import Heading from '../Heading/Heading.vue'
 
 export default {
     name : "Home",
@@ -9,6 +10,7 @@ export default {
         Card,
         Search,
         VueTailwindPagination,
+        Heading
     },
 
     computed : {

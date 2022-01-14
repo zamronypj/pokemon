@@ -18,6 +18,18 @@ const loginSvc = {
                 })
             }
         })
+    },
+
+    logout() {
+        return new Promise((resolve) => {
+            resolve({
+                status : 'ok',
+                data : {
+                    username : null,
+                    token : null
+                }
+            })
+        })
     }
 }
 

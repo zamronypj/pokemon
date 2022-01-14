@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <h1 class="p-4 text-2xl">Pokemon</h1>
+        <Heading />
         <Search />
         <div v-if="!loading">
             <div class="text-center" >
@@ -23,6 +23,7 @@
         <div class="flex justify-center" v-if="loading">Loading..</div>
 
         <VueTailwindPagination
+            class="mt-4"
             v-if="!loading && pokemons.length && (total > 20)"
             :current="page"
             :total="total"
