@@ -26,6 +26,15 @@
                         focus:bg-white
                         focus:border-blue-600
                         focus:outline-none">{{ visibleQuery }}</div>
+
+                <!-- input DOM is intentionally hidden,
+                    query is watched and we need to be able
+                    display full name of Pokemon set selected
+                    by user.
+
+                    But we can't set query with name of selected set
+                    otherwise it will cause HTTP Pokemon set search triggered again.
+                -->
                 <input
                     v-model="query"
                     type="search"
@@ -42,6 +51,7 @@
                     :placeholder="selectedSet && selectedSet.name"
                 >
             </div>
+
             <div v-if="showList" class="border border-solid border-slate-300 absolute bg-white p-4 w-80">
                 <div class="cursor-pointer" v-for="aset in pokemonSets || []"
                     :key="aset.id"
