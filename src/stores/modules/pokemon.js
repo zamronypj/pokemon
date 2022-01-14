@@ -1,5 +1,8 @@
 import pokemonSvc from '../../services/Pokemon/PokemonService'
 
+/**
+ * vuex store that maintain states for pokemon cards, sets, types and rarity
+ */
 export default {
     namespaced : true,
 
@@ -14,6 +17,10 @@ export default {
         //pokemon rarity
         selectedRarity : '',
         rarities : [],
+
+        //pokemon set
+        selectedSet : {},
+        sets : [],
 
         query : '',
         page : 1,
@@ -32,6 +39,9 @@ export default {
 
         selectedRarity : aState => aState.selectedRarity,
         rarities : aState => aState.rarities,
+
+        selectedSet : aState => aState.selectedSet,
+        sets : aState => aState.sets,
     },
 
     mutations : {
@@ -68,7 +78,7 @@ export default {
             apiResponse.data.forEach(c => aState.typeList.push(c));
         },
         typeFailed(aState) {
-            //remove all cardList array without
+            //remove all typeList array without
             //losing reference so that reactivity works
             aState.typeList.splice(0, aState.typeList.length);
         },
@@ -83,10 +93,25 @@ export default {
 
             apiResponse.data.forEach(c => aState.rarities.push(c));
         },
+
         rarityFailed(aState) {
-            //remove all cardList array without
+            //remove all rarities array without
             //losing reference so that reactivity works
             aState.rarities.splice(0, aState.rarities.length);
+        },
+
+        setsSuccess(aState, apiResponse) {
+            //copy and remove all sets array without
+            //losing reference so that reactivity works
+            aState.sets.splice(0, aState.sets.length);
+
+            apiResponse.data.forEach(c => aState.sets.push(c));
+        },
+
+        setsFailed(aState) {
+            //remove all sets array without
+            //losing reference so that reactivity works
+            aState.sets.splice(0, aState.sets.length);
         },
 
         setPage(aState, aPage) {
@@ -103,6 +128,11 @@ export default {
 
         setRarity(aState, aRarity) {
             aState.selectedRarity = aRarity
+        },
+
+        setSet(aState, aSet) {
+            aState.selectedSet.id = aSet.id
+            aState.selectedSet.name = aSet.name
         }
     },
 
@@ -113,6 +143,7 @@ export default {
                 state.query,
                 state.selectedType,
                 state.selectedRarity,
+                state.selectedSet.id,
                 state.page,
                 20
             ).then((resp) => {
@@ -138,6 +169,14 @@ export default {
             })
         },
 
+        getSets({commit}, {name, page}) {
+            return pokemonSvc.getSets(name, page, 20).then((resp) => {
+                commit('setsSuccess', resp.data)
+            }).catch((err) => {
+                commit('setsFailed', err)
+            })
+        },
+
         setQuery({commit, dispatch}, q) {
             commit('setQuery', q)
             dispatch('getCards')
@@ -150,6 +189,11 @@ export default {
 
         setRarity({commit, dispatch}, rarity) {
             commit('setRarity', rarity)
+            dispatch('getCards')
+        },
+
+        setSet({commit, dispatch}, aSet) {
+            commit('setSet', aSet)
             dispatch('getCards')
         },
 

@@ -26,7 +26,7 @@
                         focus:bg-white
                         focus:border-blue-600
                         focus:outline-none"
-                    placeholder="Search"
+                    placeholder="Search name"
                 >
             </div>
 
@@ -56,7 +56,7 @@
                     :value="type"
                     @change="setType"
                     placeholder="Select type">
-                <option v-for="atype in pokemonTypes" :key="atype">{{ atype }}</option>
+                <option v-for="atype in pokemonTypes || []" :key="atype">{{ atype }}</option>
             </select>
 
             <select class="form-select
@@ -80,9 +80,10 @@
                     focus:outline-none"
                     :value="rarity"
                     @change="setRarity">
-                <option v-for="ararity in pokemonRarities" :key="ararity">{{ ararity }}</option>
+                <option v-for="ararity in pokemonRarities || []" :key="ararity">{{ ararity }}</option>
             </select>
 
+            <PokemonSet />
         </div>
     </div>
 </template>

@@ -1,6 +1,11 @@
+import PokemonSet from "../PokemonSet/PokemonSet.vue"
 
 export default {
     name : 'Search',
+
+    components : {
+        PokemonSet
+    },
 
     computed : {
         query() {

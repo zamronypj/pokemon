@@ -24,6 +24,10 @@ export default {
             return this.$store.getters['pokemon/selectedRarity']
         },
 
+        selectedSet() {
+            return this.$store.getters['pokemon/selectedSet']
+        },
+
         total() {
             return this.$store.getters['pokemon/total']
         },

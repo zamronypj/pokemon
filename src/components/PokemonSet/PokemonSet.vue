@@ -1,0 +1,70 @@
+<template>
+        <div class="relative w-full">
+            <div class="input-group
+                relative
+                flex
+                items-stretch
+                w-full
+                m-1">
+                <div class="form-control
+                        absolute
+                        flex-auto
+                        min-w-0
+                        block
+                        w-full
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white
+                        border border-solid
+                        border-gray-300
+                        rounded
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none">{{ visibleQuery }}</div>
+                <input
+                    v-model="query"
+                    type="search"
+                    class="form-control
+                        relative
+                        flex-auto
+                        min-w-0
+                        block
+                        w-full
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white
+                        border border-solid
+                        border-gray-300
+                        rounded
+                        m-0
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                        opacity-0"
+
+                    :placeholder="selectedSet && selectedSet.name"
+                >
+            </div>
+            <div v-if="showList" class="border border-solid border-slate-300 absolute bg-white p-4 w-80">
+                <div class="cursor-pointer" v-for="aset in pokemonSets || []"
+                    :key="aset.id"
+                    @click="setSet(aset)"
+                >{{aset.name}}</div>
+            </div>
+        </div>
+</template>
+
+<style scoped>
+
+</style>
+
+<script src="./PokemonSet.js"></script>
