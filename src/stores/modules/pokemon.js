@@ -1,6 +1,8 @@
 import pokemonSvc from '../../services/Pokemon/PokemonService'
 
 export default {
+    namespaced : true,
+
     state : {
         cardList : [],
         query : '',
@@ -9,16 +11,28 @@ export default {
     },
 
     getters : {
-
+        cardList : aState => aState.cardList,
+        page : aState => aState.page,
+        loading : aState => aState.loading,
+        query : aState => aState.query
     },
 
     mutations : {
         beginCard(aState) {
             aState.loading = true
         },
+
         cardSuccess(aState, apiResponse) {
             aState.loading = false
-            aState.cardList = apiResponse.data
+
+            //copy and remove all cardList array without
+            //losing reference so that reactivity works
+            aState.cardList.splice(0, aState.cardList.length);
+            apiResponse.data.forEach(c => aState.cardList.push(c));
+        },
+
+        cardFailed(aState) {
+            aState.loading = false
         },
 
         setPage(aState, aPage) {
@@ -31,9 +45,18 @@ export default {
     },
 
     actions : {
-        getPokemons(q, page) {
+        getCards({commit, state}) {
+            commit('beginCard')
+            return pokemonSvc.getCards(state.query, state.page, 20).then((resp) => {
+                commit('cardSuccess', resp.data)
+            }).catch((err) => {
+                commit('cardFailed', err)
+            })
+        },
 
-            return pokemonSvc.getCards(q, page, 20)
+        setQuery({commit, dispatch}, q) {
+            commit('setQuery', q)
+            dispatch('getCards')
         }
     }
 }

@@ -4,6 +4,8 @@ import loginSvc from  '../../services/Login/MockLogin'
  * Vuex store that maintains authentication state
  */
 export default {
+    namespaced: true,
+
     state : {
         loading : false,
         authToken : localStorage.getItem('authToken'),

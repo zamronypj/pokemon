@@ -18,7 +18,7 @@ export default {
 
             this.errMessage = ''
             //run login action in vuex store
-            this.$store.dispatch('login', authData).then(() => {
+            this.$store.dispatch('auth/login', authData).then(() => {
                 this.$router.push('/')
             }).catch( (err) => {
                 this.errMessage = err.error

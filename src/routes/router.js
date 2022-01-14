@@ -15,11 +15,11 @@ router.beforeEach((to, from, next) => {
     //test if target route requires authentication
     if (to.matched.some(routeRec => routeRec.meta.requiresAuth)) {
         //just continue if we already logged in
-        if (store.getters.isLoggedIn) {
+        if (store.getters['auth/isLoggedIn']) {
             next()
             return
         }
-        console.log(store.getters.isLoggedIn)
+
         //user needs to login first
         next('/login')
         return
