@@ -9,12 +9,16 @@
             </div>
 
             <div v-if="!pokemons.length">
-                No result for <span class="font-bold">{{ query }}</span>
+                No result for
+                <span class="ml-1" v-if="query">Name: <span class="font-bold">{{ query }}</span></span>
+                <span class="ml-1" v-if="type">Type: <span class="font-bold">{{ type }}</span></span>
+                <span class="ml-1" v-if="rarity">Rarity: <span class="font-bold">{{ rarity }}</span></span>
             </div>
         </div>
         <div class="flex justify-center" v-if="loading">Loading..</div>
 
         <VueTailwindPagination
+            v-if="!loading && pokemons.length && (total > 20)"
             :current="page"
             :total="total"
             :per-page="20"

@@ -13,6 +13,10 @@
                 <div>Rarity</div>
                 <div>{{pokemon.rarity}}</div>
             </div>
+            <div class="flex items-center justify-between">
+                <div>Type</div>
+                <div>{{pokemon.types.join(', ')}}</div>
+            </div>
         </div>
     </div>
 </template>

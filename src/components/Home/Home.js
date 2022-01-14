@@ -1,7 +1,6 @@
 import Card from '../Card/Card.vue'
 import Search from '../Search/Search.vue'
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
-//import '@ocrv/vue-tailwind-pagination/styles'
 
 export default {
     name : "Home",
@@ -9,12 +8,20 @@ export default {
     components : {
         Card,
         Search,
-        VueTailwindPagination
+        VueTailwindPagination,
     },
 
     computed : {
         query() {
             return this.$store.getters['pokemon/query']
+        },
+
+        type() {
+            return this.$store.getters['pokemon/selectedType']
+        },
+
+        rarity() {
+            return this.$store.getters['pokemon/selectedRarity']
         },
 
         total() {
@@ -23,6 +30,10 @@ export default {
 
         pokemons() {
             return this.$store.getters['pokemon/cardList']
+        },
+
+        types() {
+            return this.$store.getters['pokemon/types']
         },
 
         loading() {
@@ -39,6 +50,14 @@ export default {
             this.$store.dispatch('pokemon/getCards')
         },
 
+        getPokemonTypes() {
+            this.$store.dispatch('pokemon/getTypes')
+        },
+
+        getPokemonRarities() {
+            this.$store.dispatch('pokemon/getRarities')
+        },
+
         updatePage(aPage) {
             this.$store.dispatch('pokemon/updatePage', aPage)
         }
@@ -47,5 +66,7 @@ export default {
 
     mounted() {
         this.getPokemons()
+        this.getPokemonTypes()
+        this.getPokemonRarities()
     }
 }

@@ -1,13 +1,37 @@
 import axios from 'axios'
 
 const baseUrl = 'https://api.pokemontcg.io/v2';
+
 export default {
-    getCards(query, page, pageSize) {
-        let q = query
-        if (query.length) {
-            //if query contains data, we use it as name
-            q = "name:" + query
+    /**
+     * build query parameters for search cards
+     *
+     * @param {*} name
+     * @param {*} type
+     * @param {*} rarity
+     * @returns
+     */
+    buildParams(name, type, rarity) {
+        let queryStrs = []
+
+        if (name) {
+            //append * to search with wildcard
+            queryStrs.push('name:"' + name + '*' +'"')
         }
+
+        if (type) {
+            queryStrs.push('types:"' + type + '"')
+        }
+
+        if (rarity) {
+            queryStrs.push('rarity:"' + rarity +'"')
+        }
+
+        return queryStrs.join(' ')
+    },
+
+    getCards(name, type, rarity, page, pageSize) {
+        const q = this.buildParams(name, type, rarity)
 
         return axios({
             url : baseUrl + '/cards',
@@ -20,7 +44,7 @@ export default {
         })
     },
 
-    getType() {
+    getTypes() {
         return axios({
             url : baseUrl + '/types',
             method : 'GET',
