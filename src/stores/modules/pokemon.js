@@ -5,6 +5,7 @@ export default {
 
     state : {
         cardList : [],
+        totalCard : 0,
         query : '',
         page : 1,
         loading : false
@@ -12,6 +13,7 @@ export default {
 
     getters : {
         cardList : aState => aState.cardList,
+        total : aState => aState.totalCard,
         page : aState => aState.page,
         loading : aState => aState.loading,
         query : aState => aState.query
@@ -29,10 +31,15 @@ export default {
             //losing reference so that reactivity works
             aState.cardList.splice(0, aState.cardList.length);
             apiResponse.data.forEach(c => aState.cardList.push(c));
+            aState.totalCard = apiResponse.totalCount
         },
 
         cardFailed(aState) {
             aState.loading = false
+            //remove all cardList array without
+            //losing reference so that reactivity works
+            aState.cardList.splice(0, aState.cardList.length);
+            aState.totalCard = 0
         },
 
         setPage(aState, aPage) {
@@ -57,6 +64,12 @@ export default {
         setQuery({commit, dispatch}, q) {
             commit('setQuery', q)
             dispatch('getCards')
+        },
+
+        updatePage({commit, dispatch}, aPage) {
+            commit('setPage', aPage)
+            dispatch('getCards')
         }
+
     }
 }

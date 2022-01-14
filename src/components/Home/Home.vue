@@ -9,10 +9,17 @@
             </div>
 
             <div v-if="!pokemons.length">
-                No result for {{ query }}
+                No result for <span class="font-bold">{{ query }}</span>
             </div>
         </div>
-        <div v-if="loading">Loading</div>
+        <div class="flex justify-center" v-if="loading">Loading..</div>
+
+        <VueTailwindPagination
+            :current="page"
+            :total="total"
+            :per-page="20"
+            @page-changed="updatePage($event)"
+        />
     </div>
 </template>
 
