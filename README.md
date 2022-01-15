@@ -29,7 +29,7 @@ Use username `admin` and password `admin` to login
 
 ### Known Issues
 
-Sometimes, API endpoint reply without `Access-Control-Allow-Origin` response header which causing CORS issue with Axios. Nothing we can do about it. If that case, try to refresh browser.
+Sometimes, API endpoint replies without `Access-Control-Allow-Origin` response header which causing CORS issue with Axios. Nothing we can do about it. If it happens, try to refresh browser.
 
 ### Screenshots
 
